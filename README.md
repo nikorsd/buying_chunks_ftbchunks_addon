@@ -168,4 +168,4 @@ It can be translated even more here: https://crowdin.com/project/buying-chunks
 
 ## 📄 License
 
-All Rights Reserved © snoopypupser
+MIT License ©snoopypupser
