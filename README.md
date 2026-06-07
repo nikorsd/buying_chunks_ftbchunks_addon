@@ -13,7 +13,7 @@ A NeoForge 1.21.1 addon for FTB Chunks that adds a fully-featured **chunk shop s
 - **Team Shop System** — Create server teams with a fixed price per chunk; any chunk claimed by that team is automatically listed for sale
 - **Automatic Sync** — All clients are updated in real-time when chunks are listed or purchased
 - **Sound Feedback** — Distinct sounds for successful purchases and error states
-- **Multilingual** — Fully translatable via `en_us.json` and `de_de.json` (more languages can be added)
+- **Multilingual** — Fully translatable via https://crowdin.com/project/buying-chunks! (more languages can be added)
 - **OP-Only Commands** — All admin commands require OP Level 2 or higher
 
 ---
