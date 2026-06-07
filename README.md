@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://discord.gg/FkgtDVA3fK">
-    <img src="https://img.shields.io/discord/1000000000000000000?color=5865F2&logo=discord&logoColor=white&style=for-the-badge&label=Join%20Discord" alt="Discord"/>
+    <img src="https://img.shields.io/badge/dynamic/json?color=5865F2&label=Discord&query=%24.presence_count&suffix=%20Online&url=https%3A%2F%2Fdiscord.com%2Fapi%2Fguilds%2F1500617331699879989%2Fwidget.json&style=for-the-badge&logo=discord&logoColor=white" alt="Discord"/>
   </a>
   <a href="https://crowdin.com/project/buying-chunks">
     <img src="https://img.shields.io/badge/Crowdin-Translate-006BB6?style=for-the-badge&logo=crowdin&logoColor=white" alt="Crowdin"/>
