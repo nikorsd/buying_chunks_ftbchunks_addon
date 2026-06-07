@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import dev.ftb.mods.ftbchunks.api.ClaimedChunk;
+import dev.ftb.mods.ftbchunks.api.ClaimedChunkManager;
 import dev.ftb.mods.ftbchunks.api.FTBChunksAPI;
 import dev.ftb.mods.ftbteams.api.FTBTeamsAPI;
 import dev.ftb.mods.ftbteams.api.Team;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.ChunkPos;
 import snoopypupser.buyingchunks.claimshop.ClaimShopEntry;
 import snoopypupser.buyingchunks.claimshop.ClaimShopSavedData;
 import snoopypupser.buyingchunks.claimshop.ClaimShopSync;
-import dev.ftb.mods.ftbchunks.api.ClaimedChunkManager;
 
 import java.util.Optional;
 
@@ -30,9 +30,9 @@ public class ClaimShopCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
         dispatcher.register(
                 Commands.literal("claimshop")
+                        .requires(source -> source.hasPermission(2))
 
                         .then(Commands.literal("set")
-                                .requires(source -> source.hasPermission(2))
                                 .then(Commands.argument("item", ResourceArgument.resource(context, Registries.ITEM))
                                         .then(Commands.argument("amount", IntegerArgumentType.integer(1, 64))
                                                 .executes(ctx -> setForSale(
@@ -53,7 +53,6 @@ public class ClaimShopCommand {
                         )
 
                         .then(Commands.literal("teamprice")
-                                .requires(source -> source.hasPermission(2))
                                 .then(Commands.literal("set")
                                         .then(Commands.argument("teamname", StringArgumentType.string())
                                                 .then(Commands.argument("item", ResourceArgument.resource(context, Registries.ITEM))
@@ -86,7 +85,6 @@ public class ClaimShopCommand {
             ServerLevel level = (ServerLevel) player.level();
             ChunkPos chunkPos = new ChunkPos(player.blockPosition());
 
-            // NEW: Check if chunk is claimed
             ClaimedChunkManager manager = FTBChunksAPI.api().getManager();
             ClaimedChunk claimed = manager.getChunk(new dev.ftb.mods.ftblibrary.math.ChunkDimPos(level.dimension(), chunkPos));
             if (claimed == null) {
@@ -94,7 +92,6 @@ public class ClaimShopCommand {
                 return 0;
             }
 
-            // Check if player is the owner of the claim
             if (!claimed.getTeamData().isTeamMember(player.getUUID()) && !source.hasPermission(4)) {
                 source.sendFailure(Component.translatable("uc7core.claimshop.error.notowner"));
                 return 0;
@@ -133,8 +130,8 @@ public class ClaimShopCommand {
             ClaimShopSavedData savedData = ClaimShopSavedData.get(level);
             ClaimShopEntry entry = savedData.getData().getEntry(chunkPos);
 
-            if (entry != null && !entry.getSellerUUID().equals(player.getUUID()) && !source.hasPermission(2)) {
-                source.sendFailure(Component.translatable("uc7core.claimshop.error.notowner"));
+            if (entry == null) {
+                source.sendFailure(Component.translatable("uc7core.claimshop.info.notforsale", chunkPos.x, chunkPos.z));
                 return 0;
             }
 
