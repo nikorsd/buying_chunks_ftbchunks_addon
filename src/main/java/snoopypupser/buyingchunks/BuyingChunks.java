@@ -13,24 +13,24 @@ import org.slf4j.Logger;
 import snoopypupser.buyingchunks.claimshop.ClaimShopEventHandler;
 import snoopypupser.buyingchunks.claimshop.ClaimShopSync;
 import snoopypupser.buyingchunks.command.ClaimShopCommand;
-import snoopypupser.buyingchunks.network.UC7Network;
+import snoopypupser.buyingchunks.network.BuyingChunksNetwork;
 
-@Mod(UC7Core.MOD_ID)
-public class UC7Core {
+@Mod(BuyingChunks.MOD_ID)
+public class BuyingChunks {
 
-    public static final String MOD_ID = "uc7core";
+    public static final String MOD_ID = "buyingchunks";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public UC7Core(IEventBus modEventBus, ModContainer modContainer) {
+    public BuyingChunks(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(this);
         new ClaimShopEventHandler().register();
-        UC7Network.register(modEventBus);
-        LOGGER.info("UC7 Core is loading...");
+        BuyingChunksNetwork.register(modEventBus);
+        LOGGER.info("Buying Chunks is loading...");
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        LOGGER.info("UC7 Core successfully initialized!");
+        LOGGER.info("Buying Chunks successfully initialized!");
     }
 
     @SubscribeEvent

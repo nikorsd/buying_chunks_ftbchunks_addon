@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
-import snoopypupser.buyingchunks.UC7Core;
+import snoopypupser.buyingchunks.BuyingChunks;
 
 import java.util.UUID;
 
@@ -52,7 +52,7 @@ public class ClaimShopEventHandler {
         if (price.isEmpty()) return;
 
         if (claimTeam.isServerTeam()) {
-            UC7Core.LOGGER.info("TeamPrice: Server-Team {} claims chunk {} – automatically for sale for {}x {}",
+            BuyingChunks.LOGGER.info("TeamPrice: Server-Team {} claims chunk {} – automatically for sale for {}x {}",
                     claimTeam.getName().getString(),
                     chunk.getPos(),
                     price.getCount(),

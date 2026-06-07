@@ -17,7 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import snoopypupser.buyingchunks.UC7Core;
+import snoopypupser.buyingchunks.BuyingChunks;
 import snoopypupser.buyingchunks.claimshop.ClaimShopEntry;
 import snoopypupser.buyingchunks.claimshop.ClaimShopSavedData;
 import snoopypupser.buyingchunks.claimshop.ClaimShopSync;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public record BuyChunkPacket(int chunkX, int chunkZ) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<BuyChunkPacket> TYPE =
-            new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(UC7Core.MOD_ID, "buy_chunk"));
+            new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(BuyingChunks.MOD_ID, "buy_chunk"));
 
     public static final StreamCodec<FriendlyByteBuf, BuyChunkPacket> STREAM_CODEC =
             StreamCodec.of(BuyChunkPacket::encode, BuyChunkPacket::decode);
@@ -104,7 +104,7 @@ public record BuyChunkPacket(int chunkX, int chunkZ) implements CustomPacketPayl
             }
 
             Team team = buyerTeam.get();
-            UC7Core.LOGGER.info("BuyChunk: buyer={} team={} isServer={}",
+            BuyingChunks.LOGGER.info("BuyChunk: buyer={} team={} isServer={}",
                     player.getGameProfile().getName(), team.getName().getString(), team.isServerTeam());
 
             if (team.isServerTeam()) {

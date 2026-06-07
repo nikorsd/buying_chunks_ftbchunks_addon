@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import snoopypupser.buyingchunks.UC7Core;
+import snoopypupser.buyingchunks.BuyingChunks;
 import snoopypupser.buyingchunks.claimshop.ClientClaimShopData;
 import snoopypupser.buyingchunks.claimshop.ClaimShopEntry;
 
@@ -20,7 +20,7 @@ import java.util.UUID;
 public record SyncClaimShopPacket(Map<ChunkPos, ClaimShopEntry> forSaleChunks) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<SyncClaimShopPacket> TYPE =
-            new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(UC7Core.MOD_ID, "sync_claim_shop"));
+            new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(BuyingChunks.MOD_ID, "sync_claim_shop"));
 
     public static final StreamCodec<FriendlyByteBuf, SyncClaimShopPacket> STREAM_CODEC =
             StreamCodec.of(SyncClaimShopPacket::encode, SyncClaimShopPacket::decode);
