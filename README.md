@@ -2,9 +2,18 @@
   <img src="https://github.com/snoopypupserr/buying_chunks_ftbchunks_addon/blob/master/BuyingChunksLogo.png?raw=true" alt="Buying Chunks Logo" width="200"/>
 </p>
 
-<h1 align="center">Buying Chunks | FTB Chunks Addon</h1>
+<h1 align="center">🏪 Buying Chunks — FTB Chunks Addon</h1>
 
-<p align="center">A NeoForge 1.21.1 addon for FTB Chunks that adds a fully-featured <b>chunk shop system</b> to your server. Admins can put claimed chunks up for sale, and players can browse and purchase them directly from the FTB Chunks map GUI.</p>
+<p align="center">
+  <a href="https://discord.gg/FkgtDVA3fK">
+    <img src="https://img.shields.io/discord/1000000000000000000?color=5865F2&logo=discord&logoColor=white&style=for-the-badge&label=Join%20Discord" alt="Discord"/>
+  </a>
+  <a href="https://crowdin.com/project/buying-chunks">
+    <img src="https://img.shields.io/badge/Crowdin-Translate-006BB6?style=for-the-badge&logo=crowdin&logoColor=white" alt="Crowdin"/>
+  </a>
+</p>
+
+A NeoForge 1.21.1 addon for FTB Chunks that adds a fully-featured **chunk shop system** to your server. Admins can put claimed chunks up for sale, and players can browse and purchase them directly from the FTB Chunks map GUI.
 
 ---
 
