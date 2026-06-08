@@ -23,6 +23,7 @@ import snoopypupser.buyingchunks.claimshop.ClaimShopSavedData;
 import snoopypupser.buyingchunks.claimshop.ClaimShopSync;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public record BuyChunkPacket(int chunkX, int chunkZ) implements CustomPacketPayload {
 
@@ -113,6 +114,25 @@ public record BuyChunkPacket(int chunkX, int chunkZ) implements CustomPacketPayl
                 return;
             }
 
+            // Chunk-Limit prüfen
+            Optional<Team> shopTeamOpt = FTBTeamsAPI.api().getManager().getTeams().stream()
+                    .filter(t -> t.getName().getString().equals(entry.getShopTeamName()))
+                    .findFirst();
+
+            if (shopTeamOpt.isPresent()) {
+                UUID shopTeamId = shopTeamOpt.get().getId();
+                if (!savedData.getData().canBuy(shopTeamId, team.getId())) {
+                    playGenericError(player);
+                    int limit = savedData.getData().getTeamChunkLimit(shopTeamId);
+                    player.sendSystemMessage(Component.translatable(
+                            "uc7core.claimshop.error.chunklimit",
+                            limit,
+                            entry.getShopTeamName()
+                    ));
+                    return;
+                }
+            }
+
             ClaimedChunkManager manager = FTBChunksAPI.api().getManager();
 
             var existingChunk = manager.getChunk(dimPos);
@@ -125,6 +145,12 @@ public record BuyChunkPacket(int chunkX, int chunkZ) implements CustomPacketPayl
             removeItems(player, price);
 
             savedData.getData().removeFromSale(pos);
+
+            // Kaufzähler erhöhen
+            shopTeamOpt.ifPresent(shopTeam ->
+                    savedData.getData().incrementBoughtCount(shopTeam.getId(), team.getId())
+            );
+
             savedData.setDirty();
 
             manager.getOrCreateData(team).claim(

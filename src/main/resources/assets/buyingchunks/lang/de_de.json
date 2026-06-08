@@ -20,5 +20,8 @@
   "uc7core.claimshop.tooltip.divider": "─────────────────",
   "uc7core.claimshop.tooltip.position": "Chunk: [%s]",
   "uc7core.claimshop.tooltip.price": "Preis: %s%s",
-  "uc7core.claimshop.tooltip.click": "Linksklick zum Kaufen!"
+  "uc7core.claimshop.tooltip.click": "Linksklick zum Kaufen!",
+  "uc7core.claimshop.error.chunklimit": "Dein Team hat das Chunk-Limit (%s) für Shop '%s' erreicht!",
+  "uc7core.claimshop.chunklimit.set.success": "Team '%s' hat jetzt ein Chunk-Kauflimit von %s.",
+  "uc7core.claimshop.chunklimit.remove.success": "Chunk-Kauflimit für Team '%s' entfernt."
 }

@@ -48,6 +48,26 @@ public class ClaimShopCommand {
                                 .executes(ctx -> removeFromSale(ctx.getSource()))
                         )
 
+                        .then(Commands.literal("setting")
+                                .then(Commands.argument("teamname", StringArgumentType.string())
+                                        .then(Commands.literal("chunks")
+                                                .then(Commands.argument("amount", IntegerArgumentType.integer(1, 9999))
+                                                        .executes(ctx -> setTeamChunkLimit(
+                                                                ctx.getSource(),
+                                                                StringArgumentType.getString(ctx, "teamname"),
+                                                                IntegerArgumentType.getInteger(ctx, "amount")
+                                                        ))
+                                                )
+                                                .then(Commands.literal("remove")
+                                                        .executes(ctx -> removeTeamChunkLimit(
+                                                                ctx.getSource(),
+                                                                StringArgumentType.getString(ctx, "teamname")
+                                                        ))
+                                                )
+                                        )
+                                )
+                        )
+
                         .then(Commands.literal("info")
                                 .executes(ctx -> getInfo(ctx.getSource()))
                         )
@@ -226,6 +246,61 @@ public class ClaimShopCommand {
 
             source.sendSuccess(() -> Component.translatable(
                     "uc7core.claimshop.teamprice.remove.success", teamName
+            ), true);
+            return 1;
+        } catch (Exception e) {
+            source.sendFailure(Component.translatable("uc7core.claimshop.error", e.getMessage()));
+            return 0;
+        }
+    }
+
+    private static int setTeamChunkLimit(CommandSourceStack source, String teamName, int limit) {
+        try {
+            ServerLevel level = source.getLevel();
+            ClaimShopSavedData savedData = ClaimShopSavedData.get(level);
+
+            Optional<Team> team = FTBTeamsAPI.api().getManager().getTeams().stream()
+                    .filter(t -> t.getName().getString().equalsIgnoreCase(teamName))
+                    .findFirst();
+
+            if (team.isEmpty()) {
+                source.sendFailure(Component.translatable("uc7core.claimshop.error.teamnotfound", teamName));
+                return 0;
+            }
+
+            savedData.getData().setTeamChunkLimit(team.get().getId(), limit);
+            savedData.setDirty();
+
+            source.sendSuccess(() -> Component.translatable(
+                    "uc7core.claimshop.chunklimit.set.success",
+                    teamName, limit
+            ), true);
+            return 1;
+        } catch (Exception e) {
+            source.sendFailure(Component.translatable("uc7core.claimshop.error", e.getMessage()));
+            return 0;
+        }
+    }
+
+    private static int removeTeamChunkLimit(CommandSourceStack source, String teamName) {
+        try {
+            ServerLevel level = source.getLevel();
+            ClaimShopSavedData savedData = ClaimShopSavedData.get(level);
+
+            Optional<Team> team = FTBTeamsAPI.api().getManager().getTeams().stream()
+                    .filter(t -> t.getName().getString().equalsIgnoreCase(teamName))
+                    .findFirst();
+
+            if (team.isEmpty()) {
+                source.sendFailure(Component.translatable("uc7core.claimshop.error.teamnotfound", teamName));
+                return 0;
+            }
+
+            savedData.getData().removeTeamChunkLimit(team.get().getId());
+            savedData.setDirty();
+
+            source.sendSuccess(() -> Component.translatable(
+                    "uc7core.claimshop.chunklimit.remove.success", teamName
             ), true);
             return 1;
         } catch (Exception e) {
